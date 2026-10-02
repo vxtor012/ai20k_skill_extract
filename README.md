@@ -7,6 +7,7 @@ Tập hợp các skill được trích xuất từ các bài lab trong khóa h�
 | Skill | Phạm vi | Tài liệu |
 | --- | --- | --- |
 | AI & RAG Evaluation | Kiểm định dataset, đánh giá chất lượng câu trả lời và truy xuất, phân tích lỗi, so sánh baseline và thiết lập quality gate cho CI/CD. | [README](skills/ai_evaluation_skill/README.md) · [SKILL.md](skills/ai_evaluation_skill/SKILL.md) |
+| LLMOps Observability | Thiết lập structured logging có lọc PII, distributed tracing, quản lý phiên bản và rollback prompt, theo dõi SLO/error budget, và phân tích sự cố theo chuỗi metrics, logs, traces. | [README](skills/llmops_observability_skill/README.md) · [SKILL.md](skills/llmops_observability_skill/SKILL.md) |
 | Responsible Agent Guardrails | Phòng thủ nhiều lớp cho agent: kiểm tra input/output, kiểm soát egress và tool, chuyển tiếp yêu cầu rủi ro cao tới người duyệt (HITL), ghi audit log. | [README](skills/responsible_agent_guardrails_skill/README.md) · [SKILL.md](skills/responsible_agent_guardrails_skill/SKILL.md) |
 
 ## Cấu trúc
@@ -17,6 +18,10 @@ skills/
 │   ├── README.md
 │   ├── SKILL.md
 │   └── templates/       # Module mẫu cho validation, metrics, benchmark và phân tích lỗi
+├── llmops_observability_skill/
+│   ├── README.md
+│   ├── SKILL.md
+│   └── templates/       # Module mẫu cho logging, tracing, prompt, SLO và phân tích sự cố
 └── responsible_agent_guardrails_skill/
     ├── README.md
     ├── SKILL.md
