@@ -10,6 +10,7 @@ Tập hợp các skill được trích xuất từ các bài lab trong khóa h�
 | AI & RAG Evaluation | Kiểm định dataset, đánh giá chất lượng câu trả lời và truy xuất, phân tích lỗi, so sánh baseline và thiết lập quality gate cho CI/CD. | [README](skills/ai_evaluation_skill/README.md) · [SKILL.md](skills/ai_evaluation_skill/SKILL.md) |
 | LLMOps Observability | Thiết lập structured logging có lọc PII, distributed tracing, quản lý phiên bản và rollback prompt, theo dõi SLO/error budget, và phân tích sự cố theo chuỗi metrics, logs, traces. | [README](skills/llmops_observability_skill/README.md) · [SKILL.md](skills/llmops_observability_skill/SKILL.md) |
 | RAG Data Foundation | Xây dựng pipeline RAG: chunking, embedding đa provider, vector store có lọc metadata, truy xuất ngữ nghĩa và đo Hit Rate@K / MRR. | [README](skills/rag_data_foundation_skill/README.md) · [SKILL.md](skills/rag_data_foundation_skill/SKILL.md) |
+| RAG Pipeline | Pipeline RAG đầu-cuối: ingest đa định dạng, hybrid retrieval (dense + BM25 + RRF), fallback OOD, sắp xếp ngữ cảnh, sinh câu trả lời có citation và đánh giá RAG Triad. | [README](skills/rag_pipeline_skill/README.md) · [SKILL.md](skills/rag_pipeline_skill/SKILL.md) |
 | Responsible Agent Guardrails | Phòng thủ nhiều lớp cho agent: kiểm tra input/output, kiểm soát egress và tool, chuyển tiếp yêu cầu rủi ro cao tới người duyệt (HITL), ghi audit log. | [README](skills/responsible_agent_guardrails_skill/README.md) · [SKILL.md](skills/responsible_agent_guardrails_skill/SKILL.md) |
 
 ## Cấu trúc
@@ -32,6 +33,10 @@ skills/
 │   ├── README.md
 │   ├── SKILL.md
 │   └── templates/       # Chunking, embeddings, vector store, pipeline RAG và benchmark truy xuất
+├── rag_pipeline_skill/
+│   ├── README.md
+│   ├── SKILL.md
+│   └── templates/       # Ingest, chunking, hybrid retrieval, generation có citation và đánh giá RAG Triad
 └── responsible_agent_guardrails_skill/
     ├── README.md
     ├── SKILL.md
