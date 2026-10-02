@@ -1,31 +1,17 @@
 ---
 name: data-pipeline-observability
-description: "Architectural blueprint and runbook for engineering resilient, observable data pipelines for AI, RAG, and analytical systems. Enforces raw data lineage preservation, declarative Great Expectations 1.x quality gates, freshness SLAs, multi-tier benchmark evaluation, controlled chaos fault injection, and idempotent self-healing recovery to eliminate Silent Failures."
-version: "1.0.0"
-tags:
-  - data-engineering
-  - data-observability
-  - data-quality
-  - great-expectations
-  - rag-pipeline
-  - mlops
-  - chaos-engineering
-  - idempotent-repair
-triggers:
-  - "data pipeline"
-  - "data observability"
-  - "data quality gate"
-  - "great expectations"
-  - "stale data"
-  - "freshness sla"
-  - "rag ingestion"
-  - "silent failure"
-  - "vector indexing pipeline"
-  - "chaos engineering data"
-  - "idempotent repair"
+description: Use when designing or repairing ingestion-to-index data pipelines, especially lineage, data-quality gates, freshness SLAs, corruption testing, and idempotent recovery. Use LLMOps Observability for application request telemetry and AI Evaluation for answer-quality benchmarks.
 ---
 
 # Enterprise Data Pipeline & Observability Skill (Runbook & Architectural Blueprint)
+
+## Scope and routing
+
+Owns reliability of data as it moves from source records through transformation and indexing, including lineage, freshness, data gates, and replay/repair. It does not own application logs/traces or general answer-quality evaluation. Use [LLMOps Observability](../llmops_observability_skill/SKILL.md) for runtime telemetry and [AI Evaluation](../ai_evaluation_skill/SKILL.md) for response-quality benchmarks.
+
+## Applying this skill
+
+Apply only the pipeline controls relevant to the task. Inspect existing data contracts, storage, and recovery semantics before changing them; verify dependency/version assumptions against the repository. Prefer deterministic fixtures and local tests, avoid unnecessary live-source calls, and never expose secret values.
 
 ## 1. Core Philosophy: Eliminating "Silent Failures" in AI & Data Systems
 
@@ -153,14 +139,14 @@ Simulate 6 standard industry corruption scenarios using `ChaosDataInjector`:
 
 ## 4. Reusable Code Templates & Module Map
 
-All production templates are located in [`skills/data_pipeline_observability/templates/`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Day10-Data-Pipeline-Data-Observability/skills/data_pipeline_observability/templates):
+Templates are located in [`templates/`](templates/):
 
-- [`base_pipeline.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Day10-Data-Pipeline-Data-Observability/skills/data_pipeline_observability/templates/base_pipeline.py): Abstract base classes (`BaseIngestionSource`, `BaseDataTransformer`, `BaseVectorIndexer`, `BasePipelineOrchestrator`, `PipelineContext`).
-- [`quality_gate.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Day10-Data-Pipeline-Data-Observability/skills/data_pipeline_observability/templates/quality_gate.py): Ephemeral Great Expectations 1.x & native vector validation engine.
-- [`freshness_monitor.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Day10-Data-Pipeline-Data-Observability/skills/data_pipeline_observability/templates/freshness_monitor.py): Temporal SLA calculator, staleness drift detection, and automated alerting.
-- [`chaos_injector.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Day10-Data-Pipeline-Data-Observability/skills/data_pipeline_observability/templates/chaos_injector.py): 6-scenario fault injection suite for chaos testing.
-- [`evaluator.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Day10-Data-Pipeline-Data-Observability/skills/data_pipeline_observability/templates/evaluator.py): Retrieval Hit Rate, Lexical Token F1, and LLM-as-a-Judge semantic scorer.
-- [`idempotent_repair.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Day10-Data-Pipeline-Data-Observability/skills/data_pipeline_observability/templates/idempotent_repair.py): Deterministic raw replayer and 3-state comparative audit generator.
+- [`base_pipeline.py`](templates/base_pipeline.py): Abstract pipeline contracts and orchestration.
+- [`quality_gate.py`](templates/quality_gate.py): Great Expectations 1.x and native validation rules.
+- [`freshness_monitor.py`](templates/freshness_monitor.py): Temporal SLA calculation and staleness detection.
+- [`chaos_injector.py`](templates/chaos_injector.py): Controlled data-fault scenarios.
+- [`evaluator.py`](templates/evaluator.py): Pipeline-specific baseline/corrupted/repaired comparison; use AI Evaluation for broader answer-quality benchmarking.
+- [`idempotent_repair.py`](templates/idempotent_repair.py): Raw replay and comparative repair audit.
 
 ---
 

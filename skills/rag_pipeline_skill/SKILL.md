@@ -1,9 +1,17 @@
 ---
 name: rag-pipeline-skill
-description: "End-to-End Enterprise RAG (Retrieval-Augmented Generation) Architecture & Implementation Runbook. Triggers when building, auditing, optimizing, or evaluating production RAG pipelines featuring multi-format ingestion, hybrid retrieval (Dense + BM25 + Reciprocal Rank Fusion), out-of-distribution fallback routing, Lost-in-the-Middle context reordering, citation-grounded generation, and quantitative multi-metric evaluation (Faithfulness, Relevance, Recall, Precision, A/B Testing)."
+description: Use when designing or integrating an end-to-end RAG system with hybrid retrieval/RRF, OOD fallback, grounded generation, citations, and system-level evaluation. Use RAG Data Foundation for isolated chunking, embedding, or vector-store components.
 ---
 
 # Enterprise RAG Pipeline Skill
+
+## Scope and routing
+
+Owns system-level RAG composition and advanced retrieval/generation behavior: multi-format ingestion, dense+sparse fusion, fallback, evidence-grounded answers, and end-to-end comparison. It is not the default for isolated vector-store or chunker work. Use [RAG Data Foundation](../rag_data_foundation_skill/SKILL.md) for reusable components and [AI Evaluation](../ai_evaluation_skill/SKILL.md) when the task is primarily dataset validation, judge quality, or CI evaluation gates.
+
+## Applying this skill
+
+Apply only the pipeline phases required by the task. Inspect existing document contracts, retrieval providers, and tests first; calibrate thresholds on in-domain data rather than adopting example values blindly. Prefer local fixtures and avoid unnecessary external calls or secret exposure.
 
 ## 1. Executive Summary & Trigger Conditions
 

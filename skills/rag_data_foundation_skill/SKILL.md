@@ -1,9 +1,17 @@
 ---
 name: rag-data-foundation
-description: Enterprise blueprint and execution engine for building domain-agnostic RAG (Retrieval-Augmented Generation) pipelines, text chunking engines, pluggable embedding backends, vector store indexing with metadata filtering, and retrieval benchmarking. Trigger when designing or implementing RAG systems, vector search, chunking strategies, embeddings, knowledge base agents, or semantic retrieval pipelines.
+description: Use when implementing reusable RAG building blocks such as document/chunk models, chunkers, embedding providers, vector stores, metadata filters, or dense retrieval baselines. Use RAG Pipeline for end-to-end hybrid retrieval, fallback, and grounded generation.
 ---
 
 # RAG Data Foundation & Vector Knowledge Pipeline Skill
+
+## Scope and routing
+
+Owns reusable ingestion, chunking, embedding, vector-store, and basic dense-retrieval components. Its retrieval evaluator is a component-level baseline, not a full answer-quality benchmark. Use [RAG Pipeline](../rag_pipeline_skill/SKILL.md) for integrated hybrid/RRF pipelines, OOD fallback, citations, and end-to-end RAG evaluation; use [AI Evaluation](../ai_evaluation_skill/SKILL.md) for general answer-quality benchmarking.
+
+## Applying this skill
+
+Implement only the component or retrieval behavior requested. Inspect existing contracts, index metadata, and embedding configuration before changing them; verify provider/version assumptions. Use deterministic mock embeddings for local tests, avoid unnecessary external calls, and never expose API keys.
 
 ## 1. Skill Overview & Trigger Criteria
 
@@ -124,15 +132,15 @@ When implementing or auditing a RAG vector system on any codebase, follow these 
 
 ## 4. Reusable Code Templates Reference
 
-All generic, production-ready modules are available in the `templates/` subdirectory:
-- [templates/models.py](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Data-Foundations/skills/rag_data_foundation_skill/templates/models.py): `Document`, `Chunk`, `QueryResult`, `BenchmarkQuery`, `EvaluationResult`
-- [templates/config.py](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Data-Foundations/skills/rag_data_foundation_skill/templates/config.py): `PipelineConfig`, `ChunkerConfig`, `EmbedderConfig`, `StoreConfig`
-- [templates/chunking.py](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Data-Foundations/skills/rag_data_foundation_skill/templates/chunking.py): `BaseChunker`, `FixedSizeChunker`, `SentenceChunker`, `RecursiveHierarchicalChunker`, `ChunkingStrategyComparator`
-- [templates/embeddings.py](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Data-Foundations/skills/rag_data_foundation_skill/templates/embeddings.py): `BaseEmbedder`, `MockEmbedder`, `LocalSentenceTransformersEmbedder`, `OpenAIEmbedder`, `GeminiEmbedder`, `cosine_similarity`
-- [templates/store.py](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Data-Foundations/skills/rag_data_foundation_skill/templates/store.py): `BaseVectorStore`, `InMemoryVectorStore`, `ChromaVectorStore`
-- [templates/agent.py](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Data-Foundations/skills/rag_data_foundation_skill/templates/agent.py): `KnowledgeBaseAgent`, `RAGPromptBuilder`
-- [templates/pipeline.py](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Data-Foundations/skills/rag_data_foundation_skill/templates/pipeline.py): `RAGPipeline`
-- [templates/evaluation.py](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3A-Data-Foundations/skills/rag_data_foundation_skill/templates/evaluation.py): `RetrievalEvaluator`
+Reusable modules are available in [`templates/`](templates/):
+- [models.py](templates/models.py): document, chunk, query-result, and benchmark entities.
+- [config.py](templates/config.py): pipeline, chunker, embedder, and store configuration.
+- [chunking.py](templates/chunking.py): fixed, sentence, and recursive chunkers.
+- [embeddings.py](templates/embeddings.py): mock, local, and cloud embedder adapters plus vector math.
+- [store.py](templates/store.py): in-memory and Chroma vector-store implementations.
+- [agent.py](templates/agent.py): basic knowledge-base agent and prompt builder.
+- [pipeline.py](templates/pipeline.py): component-level RAG orchestrator.
+- [evaluation.py](templates/evaluation.py): retrieval-only benchmark metrics.
 
 ---
 

@@ -1,23 +1,17 @@
 ---
 name: llmops-observability
-description: "Enterprise-grade LLMOps observability, defense-in-depth structured logging, distributed tracing (Langfuse/OpenTelemetry), prompt management with zero-downtime rollback, SLO & error budget evaluation, and automated incident triage (Metrics -> Logs -> Traces)."
-triggers:
-  - "monitoring"
-  - "llmops"
-  - "observability"
-  - "structured logging"
-  - "distributed tracing"
-  - "langfuse"
-  - "prompt versioning"
-  - "prompt rollback"
-  - "slo"
-  - "error budget"
-  - "pii scrubbing"
-  - "incident triage"
-  - "latency breakdown"
+description: Use when instrumenting or debugging LLM application runtime telemetry: structured logs, traces, prompt versions, SLOs, and incident triage. Use Data Pipeline Observability for source-to-index integrity and Responsible Agent Guardrails for enforcement policy.
 ---
 
 # LLMOps Observability, Distributed Tracing & Incident Triage Skill
+
+## Scope and routing
+
+Owns application-runtime signals and their correlation across metrics, logs, and traces, plus prompt lifecycle and SLO triage. PII scrubbing here protects telemetry sinks; it is not a substitute for user-output or egress guardrails. Use [Data Pipeline Observability](../data_pipeline_observability/SKILL.md) for ingestion/index reliability and [Responsible Agent Guardrails](../responsible_agent_guardrails_skill/SKILL.md) for security decisions.
+
+## Applying this skill
+
+Apply only the telemetry layers needed for the task. Inspect existing logging/tracing conventions and privacy requirements first; verify vendor APIs, dependency versions, and SLO targets locally. Prefer no-op/local telemetry in tests, avoid unnecessary external calls, and never print credentials or raw sensitive payloads.
 
 ## 1. Skill Specification & Trigger Context
 
@@ -144,28 +138,28 @@ flowchart TD
 
 ## 4. Reusable Code Templates & Patterns
 
-All modular templates are located in [`templates/`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3-DAY13-LaiBaQuan-02495-Monitoring-LLMOps/skills/llmops_observability_skill/templates):
+All modular templates are located in [`templates/`](templates/):
 
-### 1. PII Redaction & Hashing ([`pii_scrubber.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3-DAY13-LaiBaQuan-02495-Monitoring-LLMOps/skills/llmops_observability_skill/templates/pii_scrubber.py))
+### 1. PII Redaction & Hashing ([`pii_scrubber.py`](templates/pii_scrubber.py))
 - Precompiled regex dictionary for high throughput.
 - Recursive nested dictionary/list sanitizer.
 - SHA-256 pseudonymizer for identifiers.
 
-### 2. Context Isolation Middleware ([`middleware.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3-DAY13-LaiBaQuan-02495-Monitoring-LLMOps/skills/llmops_observability_skill/templates/middleware.py))
+### 2. Context Isolation Middleware ([`middleware.py`](templates/middleware.py))
 - High-performance Starlette middleware with nanosecond-precision timing.
 - Auto-header injection (`x-request-id`, `x-response-time-ms`).
 
-### 3. Structured Logging Pipeline ([`logging_pipeline.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3-DAY13-LaiBaQuan-02495-Monitoring-LLMOps/skills/llmops_observability_skill/templates/logging_pipeline.py))
+### 3. Structured Logging Pipeline ([`logging_pipeline.py`](templates/logging_pipeline.py))
 - Integrated Structlog engine with UTC ISO-8601 timestamps.
 - Thread-safe JSONL file appender and stdout formatter.
 
-### 4. Distributed Tracer ([`tracer.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3-DAY13-LaiBaQuan-02495-Monitoring-LLMOps/skills/llmops_observability_skill/templates/tracer.py))
+### 4. Distributed Tracer ([`tracer.py`](templates/tracer.py))
 - Universal tracer interface with graceful No-Op fallback when telemetry is unreachable.
 
-### 5. Multi-Tier Prompt Resolver ([`prompt_manager.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3-DAY13-LaiBaQuan-02495-Monitoring-LLMOps/skills/llmops_observability_skill/templates/prompt_manager.py))
+### 5. Multi-Tier Prompt Resolver ([`prompt_manager.py`](templates/prompt_manager.py))
 - Remote registry client integration with safe local formatting fallback.
 
-### 6. Incident Triad Correlator ([`incident_debugger.py`](file:///c:/Users/Vxtor/Documents/workspace/ai20k/K4-L3-DAY13-LaiBaQuan-02495-Monitoring-LLMOps/skills/llmops_observability_skill/templates/incident_debugger.py))
+### 6. Incident Triad Correlator ([`incident_debugger.py`](templates/incident_debugger.py))
 - Correlates metric anomalies ➔ log lines ➔ trace span waterfalls to isolate bottlenecks.
 
 ---

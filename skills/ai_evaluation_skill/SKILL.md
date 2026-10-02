@@ -1,20 +1,17 @@
 ---
 name: ai-eval-benchmarking
-description: Autonomous framework and execution blueprint for evaluating, benchmarking, and gating AI/LLM/RAG systems using stratified golden datasets, lexical/semantic heuristics, LLM-as-a-Judge with bias detection, automated failure triage, and CI/CD quality gates.
-triggers:
-  - "evaluate llm"
-  - "rag evaluation"
-  - "ai evaluation"
-  - "benchmark agent"
-  - "golden dataset validation"
-  - "llm as judge"
-  - "faithfulness relevance completeness"
-  - "regression test ai"
-  - "context precision context recall"
-  - "hallucination detection"
+description: Use when evaluating AI/LLM/RAG answer quality with datasets, blind inference, metrics or judges, failure analysis, and regression gates. Use Agentic Tool Evaluation for tool routing/arguments and Data Pipeline Observability for ingestion integrity and repair.
 ---
 
 # AI & RAG Evaluation & Benchmarking System Blueprint
+
+## Scope and routing
+
+Owns evaluation dataset contracts, inference isolation, answer/retrieval quality metrics, judge analysis, failure reports, and benchmark gates. It does not implement tool dispatch or data-ingestion recovery. Use [Agentic Tool Evaluation Harness](../agentic_tool_eval_harness_skill/SKILL.md) for tool-call behavior and [Data Pipeline Observability](../data_pipeline_observability/SKILL.md) for data quality, freshness, chaos, and repair.
+
+## Applying this skill
+
+Apply only the phases relevant to the requested evaluation. Inspect the target system and dataset contract first; calibrate thresholds against the domain instead of treating example values as universal. Keep inference blind to gold answers, prefer local/mock runs, and never expose secret values.
 
 ## 1. Core Philosophy & Architectural Blueprint
 
@@ -68,6 +65,8 @@ flowchart TD
 | **Generation**| `Answer Relevance` | $\frac{\|\text{Answer Tokens} \cap \text{Question Tokens}\|}{\|\text{Question Tokens}\|}$ (Query alignment) | $\ge 0.80$ |
 | **Generation**| `Completeness` | $\frac{\|\text{Answer Tokens} \cap \text{Expected Tokens}\|}{\|\text{Expected Tokens}\|}$ (Coverage) | $\ge 0.75$ |
 | **Judge** | `Rubric Alignment` | Multi-criteria score (1.0–5.0) normalized with reasoning | $\ge 4.0 / 5.0$ |
+
+Token-overlap formulas above are inexpensive lexical proxies, not proof of semantic faithfulness, relevance, or completeness. Report their limitations; for high-stakes decisions, combine them with claim-level evidence checks, human-labeled cases, and an independently validated judge rather than treating any single score as ground truth.
 
 ---
 

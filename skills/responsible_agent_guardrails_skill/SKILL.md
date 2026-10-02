@@ -1,19 +1,17 @@
 ---
 name: responsible-agent-guardrails
-description: Implements a production-grade, defense-in-depth security boundary, guardrails, egress enforcement, HITL routing, and observability for autonomous LLM agents. Trigger when building secure AI pipelines, sanitizing LLM inputs/outputs, preventing prompt injections/data leaks, or configuring human-in-the-loop validation.
-keywords:
-  - guardrails
-  - prompt-injection
-  - pii-redaction
-  - hitl
-  - egress-gateway
-  - defense-in-depth
-  - responsible-ai
-  - secret-detection
-  - audit-logging
+description: Use when designing agent security policy and enforcement boundaries: input/output guardrails, prompt-injection defense, egress control, risk-based HITL, and security audit. Use LLMOps Observability for runtime telemetry and Agentic Tool Evaluation for benchmark scoring.
 ---
 
 # Responsible Agent Guardrails & Governance Skill
+
+## Scope and routing
+
+Owns security decisions and policy enforcement across agent inputs, outputs, tool/network egress, and human review. Its audit events are security evidence, not a replacement for runtime observability. Use [LLMOps Observability](../llmops_observability_skill/SKILL.md) for correlated application telemetry and [Agentic Tool Evaluation Harness](../agentic_tool_eval_harness_skill/SKILL.md) for measuring tool-call behavior.
+
+## Applying this skill
+
+Apply controls according to the system's threat model and trust boundaries. Inspect existing policy and enforcement points before changing behavior; validate fail-closed paths with local adversarial tests. Treat regexes and thresholds as defense-in-depth signals, not complete security guarantees, and never log raw secrets.
 
 ## 1. Core Philosophy & Architectural Blueprint
 

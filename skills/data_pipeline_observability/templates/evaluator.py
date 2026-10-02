@@ -171,6 +171,7 @@ Evaluate on:
 Output format in JSON:
 {{"score": 1-5, "correct": true/false, "reasoning": "short explanation"}}"""
 
+        fallback_reason = "LLM judge returned an invalid response."
         try:
             raw_response = self.llm_callable(prompt)
             # Simple JSON parse or fallback
@@ -180,9 +181,10 @@ Output format in JSON:
                 return float(data.get("score", 3.0)), bool(data.get("correct", False)), str(data.get("reasoning", ""))
         except Exception as e:
             logger.warning(f"LLM Judge execution error: {e}")
+            fallback_reason = f"LLM judge failed: {e}"
 
         f1 = TokenF1Calculator.compute(ground_truth, prediction)
-        return 1.0 + f1 * 4.0, f1 >= 0.5, f"Fallback estimate due to LLM error: {e}"
+        return 1.0 + f1 * 4.0, f1 >= 0.5, f"Fallback estimate: {fallback_reason}"
 
 
 class PipelineEvaluator:

@@ -1,9 +1,17 @@
 ---
 name: agentic-tool-eval-harness
-description: Generalized framework and runbook for designing, executing, evaluating, and securing autonomous tool-calling AI agents with multi-turn loops, deterministic benchmark scoring, and dual-layer safety boundaries.
+description: Use when building or evaluating tool-calling agents, especially multi-turn orchestration, provider adapters, tool routing/argument schemas, and runtime confirmation. Use AI Evaluation for answer/RAG quality and Responsible Agent Guardrails for shared security policy.
 ---
 
 # Agentic Tool Evaluation Harness Skill
+
+## Scope and routing
+
+Owns tool-call orchestration and deterministic evaluation of tool selection, arguments, call counts, and multi-turn behavior. It does not own general answer-quality benchmarks or the shared security policy model. Use [AI Evaluation](../ai_evaluation_skill/SKILL.md) for answer/RAG scoring and [Responsible Agent Guardrails](../responsible_agent_guardrails_skill/SKILL.md) for cross-agent input/output, egress, and HITL policy.
+
+## Applying this skill
+
+Apply only the phases relevant to the requested change. Inspect the target repository and its tests first; treat provider, dependency, and metric settings below as defaults to verify. Prefer mocks/local tests, avoid unnecessary installs or external calls, and never expose secret values.
 
 ## 1. Skill Name & Description
 
@@ -67,8 +75,8 @@ Khi Agent được kích hoạt trên một codebase mới, hãy thực hiện t
    - Quét file dependencies (`requirements.txt`, `pyproject.toml`, `package.json`).
    - Biên dịch kiểm tra lỗi cú pháp: `python -m compileall -q .` hoặc `npm run build --dry-run`.
 2. **Kiểm tra Provider & Key Access:**
-   - Xác minh các biến môi trường cần thiết (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`).
-   - Chạy script smoke-test kiểm tra khả năng gọi function-calling của model đang cấu hình trước khi tiêu tốn quota lớn.
+    - Chỉ xác minh sự hiện diện của biến môi trường cần thiết (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`); không in giá trị hoặc yêu cầu người dùng gửi secret.
+    - Chỉ chạy smoke-test với provider thật khi đã được cấu hình/cho phép và có ngân sách quota; nếu không, dùng mock provider và ghi rõ benchmark không đo provider production.
 
 ### Bước 2: Khởi tạo Baseline (v0 Benchmark Run)
 1. **Giữ nguyên trạng thái gốc:** Không chỉnh sửa system prompt hay tool schema trước khi chạy baseline.
