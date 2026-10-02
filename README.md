@@ -8,6 +8,7 @@ Tập hợp các skill được trích xuất từ các bài lab trong khóa h�
 | --- | --- | --- |
 | Agentic Tool Evaluation Harness | Xây dựng và đánh giá agent gọi công cụ nhiều lượt, chuẩn hóa adapter cho các LLM provider, đo routing/tham số và áp dụng guardrails cho tool runtime. | [README](skills/agentic_tool_eval_harness_skill/README.md) · [SKILL.md](skills/agentic_tool_eval_harness_skill/SKILL.md) |
 | AI & RAG Evaluation | Kiểm định dataset, đánh giá chất lượng câu trả lời và truy xuất, phân tích lỗi, so sánh baseline và thiết lập quality gate cho CI/CD. | [README](skills/ai_evaluation_skill/README.md) · [SKILL.md](skills/ai_evaluation_skill/SKILL.md) |
+| Data Pipeline Observability | Pipeline dữ liệu cho RAG/AI: quality gate, SLA freshness, chaos injection, đánh giá truy xuất và sửa chữa idempotent để tránh silent failure. | [README](skills/data_pipeline_observability/README.md) · [SKILL.md](skills/data_pipeline_observability/SKILL.md) |
 | LLMOps Observability | Thiết lập structured logging có lọc PII, distributed tracing, quản lý phiên bản và rollback prompt, theo dõi SLO/error budget, và phân tích sự cố theo chuỗi metrics, logs, traces. | [README](skills/llmops_observability_skill/README.md) · [SKILL.md](skills/llmops_observability_skill/SKILL.md) |
 | RAG Data Foundation | Xây dựng pipeline RAG: chunking, embedding đa provider, vector store có lọc metadata, truy xuất ngữ nghĩa và đo Hit Rate@K / MRR. | [README](skills/rag_data_foundation_skill/README.md) · [SKILL.md](skills/rag_data_foundation_skill/SKILL.md) |
 | RAG Pipeline | Pipeline RAG đầu-cuối: ingest đa định dạng, hybrid retrieval (dense + BM25 + RRF), fallback OOD, sắp xếp ngữ cảnh, sinh câu trả lời có citation và đánh giá RAG Triad. | [README](skills/rag_pipeline_skill/README.md) · [SKILL.md](skills/rag_pipeline_skill/SKILL.md) |
@@ -25,6 +26,10 @@ skills/
 │   ├── README.md
 │   ├── SKILL.md
 │   └── templates/       # Module mẫu cho validation, metrics, benchmark và phân tích lỗi
+├── data_pipeline_observability/
+│   ├── README.md
+│   ├── SKILL.md
+│   └── templates/       # Quality gate, freshness SLA, chaos injection, evaluator và idempotent repair
 ├── llmops_observability_skill/
 │   ├── README.md
 │   ├── SKILL.md
